@@ -10,4 +10,4 @@ The model is provided by [Dr. Ward van Pelt](http://www.wardvanpelt.com/) with h
 (S1, S2) Final preparation of model input. Define initial conditions of the model
 ## 4. results
 
-![storglaciaren](results/storglaciaren.jpg)
+![storglaciaren](results/storglaciaren.png)
