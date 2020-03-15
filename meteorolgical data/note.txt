@@ -1,0 +1,12 @@
+the folder names indicate source of data
+AbliationAWS\summer is the AWS only operates in summer;
+check\ is the folder for the output of data gap check
+nikkaluokta\ has the data from SMHI
+SMHI\ contains cloud info from other stations of SMHI
+su is fTarfala Research Station
+
+S1timeClimate.mlx is the one organizes climate forcing data from all sources and perform gap filling;
+
+S2ClimateInputPreparation.m is used for spatial climate input. I am still working on that. 
+
+ablation aws (67.9030?N, 18.5726?E)

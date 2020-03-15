@@ -1,0 +1,74 @@
+Newer files with names ending in tm have coordinates in SWEREF99 TM (EPSG:3006) otherwise they are in RT90 (the old Swedish national grid). 
+
+sg_dens: From depth, To depth, Length, core diameter(?), Weight(?), (?), Density, Density, (?), (?), (?), (?), Pit/Core number
+
+sg_density: E, N, Altitude, To Depth, Sample density, Bulk density for pit/core
+
+sg_melt: E, N, Altitude, Stake ablation (m)
+
+sg_snow: E, N, Snow depth (cm)
+
+density 2012, 2016 has problem
+snow 2013   unit is in meters not cm/ corrected mannually
+
+
+
+function [DensData] = readdensity(fname) 
+% This file reads in density data from a comma separated text file.
+% Minimum number of columns is six and the order of the columns must be:
+%  [SiteID,StartDepth,StopDepth, SampleLength, SampleWeight,SampleDiameter]
+% All values mst be in cm, and grams. 
+% If additional columns are present,these are interpreted as pre-calculated
+% density data and is also loaded. The order of the additonal data must be:
+%  [SampleDenity, AverageDepth, MaxDepth, SampleWaterEq, CumWaterEq] 
+%
+%   Rickard Pettersson, February 2007
+
+% Load the data
+temp = dlmread(fname,',');
+
+% Check the size of the data
+if(size(temp,2) < 6)
+    error('Error reading data: All data is not present in density file');
+elseif((size(temp,2) > 6) && (size(temp,2) < 11))
+    error('Error reading data: All data is not present in density file');
+end
+
+% Check for any nans in the data
+if(any(isnan(temp(:)))) 
+    % Find index to NaNs and remove them
+    [r,c] = find(isnan(temp) == 1);
+    temp(r,:) = [];
+    
+    % Let the user know that they were removed
+    warning('NaNs were removed in the density data');
+end
+
+% Check for empty rows in the data
+i = find(all((temp == 0)') == 1);
+
+if(~isempty(i))
+    % Delete empy rows    
+    temp(i,:) = [];
+    % Let the user know that they were removed
+    warning('Empty rows were removed in the density data'); 
+end
+
+
+% Split up the density into a structure
+DensData.SiteID = temp(:,11);
+DensData.StartDepth = temp(:,1);
+DensData.StopDepth = temp(:,2);
+DensData.SampleLength = temp(:,3);
+DensData.SampleWeight = temp(:,4);
+DensData.SampleDiameter = temp(:,5);
+
+% If the sample data contains more columns
+% it contains already calculated density values
+if(size(temp,2) > 6)
+    DensData.SampleDensity = temp(:,6);
+    DensData.AverageDepth = temp(:,7);
+    DensData.MaxDepth = temp(:,8);
+    DensData.SampleWaterEq = temp(:,9);
+    DensData.CumWaterEq = temp(:,10);
+end

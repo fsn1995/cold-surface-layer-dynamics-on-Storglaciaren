@@ -1,0 +1,14 @@
+ENVI
+description = {
+C:\Users\Shunan\OneDrive - Uppsala universitet\UU\Semester4\thesis\data\Tarfala\glacier\storglaciarenDEM\Storglaciaren\stor90.dat}
+samples = 371
+lines   = 201
+bands   = 1
+header offset = 0
+file type = ENVI Standard
+data type = 5
+interleave = bsq
+byte order = 0
+map info = {Unknown, 1, 1, 1614295, 7538305, 10, 10, 0, North}
+band names = {
+Band 1}
